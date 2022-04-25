@@ -61,9 +61,9 @@ export default function MenuAppBar() {
             sx={{ mr: 2 }}
             onClick={() => navigate("/Dashboard")}
           >
-            || EMIN ||
+            |[] --- EMIN BLOG --- []|
           </IconButton >
-            BLOG
+            
           </Typography>
           {auth && (
             <div>

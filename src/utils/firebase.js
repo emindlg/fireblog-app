@@ -1,5 +1,5 @@
 
-import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -18,8 +18,68 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 
 
-export 
+export const createUser = async (email, password, navigate) => {
+  try {
+    let userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    //await updateProfile(auth.currentUser, {
+    //  displayName: displayName,
+    //});
+    navigate("/Dashboard");
+    console.log(userCredential);
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+  export const signIn = async (email, password, navigate) => {
+    try {
+      let userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      navigate("/Dashboard");
+      console.log(userCredential);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  export const logOut = () => {
+    signOut(auth);
+    alert("logged out successfully");
+  };
+
+  export const userObserver = (setCurrentUser) => {
+    onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setCurrentUser(currentUser);
+        // ...
+      } else {
+        // User is signed out
+        setCurrentUser(false);
+      }
+    });
+  };
+
+  export const signUpProvider = (navigate) => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        console.log(error);
+        // ...
+      });
+  };
