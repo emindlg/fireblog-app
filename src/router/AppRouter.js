@@ -8,8 +8,13 @@ import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 import UpdateBlog from "../pages/UpdateBlog";
 import MyNavbar from "../components/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext"
 
 const AppRouter = () => {
+
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <Router>
         <MyNavbar />

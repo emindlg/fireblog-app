@@ -27,8 +27,11 @@ const Login = () => {
       signUpProvider(navigate);
     }
   return (
-    <div style={{border: "1px solid gray", height:"550px", width: "400px",margin: "50px auto", borderRadius: "5px",  alignItems: "center", flexWrap: "wrap", padding: "10px", boxShadow:"5px 5px 9px"}}>
-          <div>
+    <>
+    
+    <div style={{border: "1px solid gray", height:"550px", width: "400px",margin: "50px auto", borderRadius: "5px",  alignItems: "center", flexWrap: "wrap", padding: "10px", boxShadow:"5px 5px 9px", backgroundColor: "white"}} >
+      
+          <div >
             <img src={ blogPic } alt=""not found/>
           </div>
           <h3>.....LOGIN.....</h3>
@@ -56,6 +59,7 @@ const Login = () => {
           <TextField 
           id="demo-helper-text-misaligned-no-helper" 
           label="Password" 
+          type="password"
           required
           onChange={(e)=> setPassword(e.target.value)} />
         </Box>
@@ -67,7 +71,8 @@ const Login = () => {
             type="submit" 
             style={{marginTop: "30px", 
             width: "270px"}}
-            //onSubmit={handleSubmit}
+            value = "Login"
+            onSubmit={handleSubmit}
             >
               Login
             </Button>
@@ -77,6 +82,7 @@ const Login = () => {
         </div>
     
     </div>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import AppRouter from './router/AppRouter';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{backgroundImage: "url(https://picsum.photos/800/800)", imageSize:"cover", height: "100vh"}}>
       <AuthContextProvider>
         <AppRouter />
       </AuthContextProvider>
