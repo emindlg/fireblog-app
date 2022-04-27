@@ -30,7 +30,7 @@ const Login = () => {
     <>
     
     <div style={{border: "1px solid gray", height:"550px", width: "400px",margin: "50px auto", borderRadius: "5px",  alignItems: "center", flexWrap: "wrap", padding: "10px", boxShadow:"5px 5px 9px", backgroundColor: "white"}} >
-      
+      <form onSubmit={handleSubmit}>
           <div >
             <img src={ blogPic } alt=""not found/>
           </div>
@@ -72,7 +72,7 @@ const Login = () => {
             style={{marginTop: "30px", 
             width: "270px"}}
             value = "Login"
-            onSubmit={handleSubmit}
+            
             >
               Login
             </Button>
@@ -80,7 +80,7 @@ const Login = () => {
         <div>
           <Button variant="contained" style={{margin: "10px", width: "270px", backgroundColor: "#7ddd", color: "black"}}>WITH <img src={google} alt="yok" style={{width: "65px", paddingLeft: "10px"}} onClick={handleProviderLogin}/></Button>
         </div>
-    
+      </form>
     </div>
     </>
   );

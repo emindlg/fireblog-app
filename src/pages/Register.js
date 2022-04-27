@@ -1,93 +1,91 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createUser } from "../utils/firebase";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import blogPic from "../assests/blok.png"
+import  Button  from '@mui/material/Button';
+import google from "../assests/google.png"
+import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { createUser, signUpProvider } from '../utils/firebase';
+//import Toastify from "../utils/toast";
+
 
 const Register = () => {
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    const displayName = `${firstName} ${lastName}`;
     e.preventDefault();
-    createUser(email, password, displayName, navigate);
-
-    console.log(firstName, lastName);
+    createUser(email, password, navigate);
+    console.log(email, password);
+    //Toastify("submit is successfull")
   };
+  
+
+
+    const handleProviderLogin = () => {
+      signUpProvider(navigate);
+    }
   return (
-    <div className="d-flex justify-content-center">
-      {window.innerWidth > 700 && (
-        <div className="form-image">
-          <img src={"https://picsum.photos/800/800"} alt="sample-movie" />
+    <>
+    
+    <div style={{border: "1px solid gray", height:"550px", width: "400px",margin: "50px auto", borderRadius: "5px",  alignItems: "center", flexWrap: "wrap", padding: "10px", boxShadow:"5px 5px 9px", backgroundColor: "white"}} >
+    <form onSubmit={handleSubmit}>
+          <div >
+            <img src={ blogPic } alt=""not found/>
+          </div>
+          <h3>.....REGISTER.....</h3>
+          
+        <Box
+          sx={{
+            //display: 'flex',
+            alignItems: 'center',
+            '& > :not(style)': { m: 1 },
+          }}
+        >      
+          <TextField 
+          id="demo-helper-text-misaligned-no-helper" 
+          label="Email" 
+          required 
+          onChange={(e)=> setEmail(e.target.value)} />
+        </Box>
+        <Box
+          sx={{
+            
+            alignItems: 'center',
+            '& > :not(style)': { m: 1 },
+          }}
+        >      
+          <TextField 
+          id="demo-helper-text-misaligned-no-helper" 
+          label="Password" 
+          type="password"
+          required
+          onChange={(e)=> setPassword(e.target.value)} />
+        </Box>
+        
+
+        <div>
+            <Button 
+            variant="contained"
+            type="submit" 
+            style={{marginTop: "30px", 
+            width: "270px"}}
+            value = "Register"
+            
+            >
+              Register
+            </Button>
         </div>
-      )}
-      <div className="register-form">
-        <h1 className="form-title display-3">Register</h1>
-        <form id="register" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="first-name" className="form-label">
-              First Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="first-name"
-              placeholder="Enter your first name.."
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="last-name" className="form-label">
-              Last Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="last-name"
-              placeholder="Enter your last name.."
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Enter your email adress.."
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Enter your password.."
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <input
-            type="submit"
-            className="btn btn-primary form-control"
-            value="Register"
-            // onSubmit={handleSubmit}
-          />
+        <div>
+          <Button variant="contained" style={{margin: "10px", width: "270px", backgroundColor: "#7ddd", color: "black"}}>WITH <img src={google} alt="yok" style={{width: "65px", paddingLeft: "10px"}} onClick={handleProviderLogin}/></Button>
+        </div>
         </form>
-      </div>
     </div>
+    </>
   );
 };
 
-export default Register;
+ export default Register;

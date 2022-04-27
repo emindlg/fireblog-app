@@ -6,9 +6,13 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut,
-  updateProfile,
+  signOut
 } from "firebase/auth";
+import { useEffect, useState} from "react";
+import { getDatabase, ref, set, onValue, remove, update } from "firebase/database";
+
+
+//import Toastify from "./toast"
 
 //* https://firebase.google.com/docs/auth/web/start
 //* https://console.firebase.google.com/ => project settings
@@ -34,18 +38,17 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export const createUser = async (email, password, displayName, navigate) => {
+export const createUser = async (email, password, navigate) => {
   try {
     let userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    await updateProfile(auth.currentUser, {
-      displayName: displayName,
-    });
-    navigate("/");
+    
+    navigate("/Dashboard");
     console.log(userCredential);
+    
   } catch (err) {
     alert(err.message);
   }
@@ -60,7 +63,7 @@ export const signIn = async (email, password, navigate) => {
       email,
       password
     );
-    navigate("/");
+    navigate("/Dashboard");
     console.log(userCredential);
   } catch (err) {
     alert(err.message);
@@ -70,6 +73,8 @@ export const signIn = async (email, password, navigate) => {
 export const logOut = () => {
   signOut(auth);
   alert("logged out successfully");
+  
+  
 };
 
 export const userObserver = (setCurrentUser) => {
@@ -91,7 +96,7 @@ export const signUpProvider = (navigate) => {
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log(result);
-      navigate("/");
+      navigate("/Dashboard");
     })
     .catch((error) => {
       // Handle Errors here.
@@ -103,4 +108,20 @@ export const signUpProvider = (navigate) => {
 
 
 
+const database = getDatabase();
+
+function writeUserData(userId, name, email, imageUrl) {
+  const db = getDatabase();
+  set(ref(db, 'users/' + userId), {
+    username: name,
+    email: email,
+    profile_picture : imageUrl
+  });
+}
   
+
+const starCountRef = ref(db, 'posts/' + postId + '/starCount');
+onValue(starCountRef, (snapshot) => {
+  const data = snapshot.val();
+  updateStarCount(postElement, data);
+});

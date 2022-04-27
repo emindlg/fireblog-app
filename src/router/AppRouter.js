@@ -13,7 +13,7 @@ import { AuthContext } from "../contexts/AuthContext"
 
 const AppRouter = () => {
 
-  const { currentUser } = useContext(AuthContext);
+  //const { currentUser } = useContext(AuthContext);
 
   return (
     <Router>

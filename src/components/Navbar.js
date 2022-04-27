@@ -4,20 +4,21 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import clarusway from "../assests/cw.jpeg"
 import { useNavigate } from 'react-router-dom';
+import { AuthContext} from "../contexts/AuthContext";
+import { useContext, useState } from "react";
+import { logOut } from "../utils/firebase";
 
-export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const navigate = useNavigate()
+const Navbar = () => {
+  //const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
 
   //const handleChange = (event) => {
   //  setAuth(event.target.checked);
@@ -25,6 +26,7 @@ export default function MenuAppBar() {
   
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+    
   };
     
   const handleClickProfil = () => {
@@ -34,13 +36,19 @@ export default function MenuAppBar() {
   
   const handleClose = () => {
     setAnchorEl(null);
-    navigate("/Login");
+    
   };
   
   const handleClickNew = (e) => {
     setAnchorEl(null);
     navigate("/NewBlog");
   };
+
+  const handleClickLogout = (e) => {
+    logOut();
+    setAnchorEl(null);
+    navigate("/Login");
+  }
 
 
   return (
@@ -61,12 +69,12 @@ export default function MenuAppBar() {
             sx={{ mr: 2 }}
             onClick={() => navigate("/Dashboard")}
           >
-            |[] --- EMIN BLOG --- []|
+            |[] --- BLOG --- []|
           </IconButton >
             
           </Typography>
-          {auth && (
             <div>
+          
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -92,15 +100,27 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClickProfil}>Profile</MenuItem>
-                <MenuItem onClick={handleClickNew}>New</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </Menu>
+               {!currentUser ? (
+                 <div>
+                <MenuItem onClick={() =>navigate("/Login")}>Login</MenuItem>
+                <MenuItem onClick={() =>navigate("/Register")}>Register</MenuItem>
+                
+                </div>
+               ) : (
+                 <div>
+                 <MenuItem onClick={handleClickProfil}>Profile</MenuItem>
+                 <MenuItem onClick={handleClickNew}>New Blog</MenuItem>
+                 <MenuItem onClick={handleClickLogout}>Logout</MenuItem>
+                 </div>
+               )}
+                
+              </Menu> 
             </div>
-          )}
+           
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
 
+export default Navbar;
