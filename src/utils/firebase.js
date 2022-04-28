@@ -8,8 +8,7 @@ import {
   signInWithPopup,
   signOut
 } from "firebase/auth";
-import { useEffect, useState} from "react";
-import { getDatabase, ref, set, onValue, remove, update } from "firebase/database";
+
 
 
 //import Toastify from "./toast"
@@ -19,6 +18,7 @@ import { getDatabase, ref, set, onValue, remove, update } from "firebase/databas
 const firebaseConfig = {
   apiKey: "AIzaSyAAUB6ebhvx8QBYJgW_xg4_Mc2iL_8Rg9k",
   authDomain: "fire-blog-3fe57.firebaseapp.com",
+  databaseURL: "https://fire-blog-3fe57-default-rtdb.firebaseio.com",
   projectId: "fire-blog-3fe57",
   storageBucket: "fire-blog-3fe57.appspot.com",
   messagingSenderId: "573377398764",
@@ -34,9 +34,9 @@ const firebaseConfig = {
 // };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebase = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
+const auth = getAuth(firebase);
 
 export const createUser = async (email, password, navigate) => {
   try {
@@ -106,22 +106,5 @@ export const signUpProvider = (navigate) => {
 };
 
 
+export default firebase;
 
-
-const database = getDatabase();
-
-function writeUserData(userId, name, email, imageUrl) {
-  const db = getDatabase();
-  set(ref(db, 'users/' + userId), {
-    username: name,
-    email: email,
-    profile_picture : imageUrl
-  });
-}
-  
-
-const starCountRef = ref(db, 'posts/' + postId + '/starCount');
-onValue(starCountRef, (snapshot) => {
-  const data = snapshot.val();
-  updateStarCount(postElement, data);
-});

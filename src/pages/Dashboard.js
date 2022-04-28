@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { display } from '@mui/system';
+import { useFetch } from "../utils/function"
 
 
 
@@ -24,7 +25,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const App = () =>{
+const AppClock = () =>{
   const current = new Date();
   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 
@@ -35,33 +36,36 @@ const App = () =>{
   );
 }
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({updateHandler}) {
+
+  const {isLoading, blogList} = useFetch();
   
-  const currentDate = App();
+  const currentDate = AppClock();
 
   return (
+    <div>
+    {blogList?.map((item, index) => (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
         height="154"
-        image="/static/images/cards/paella.jpg"
+        image={item.imgUrl}
         alt="Paella dish"
       />
 
       <CardHeader       
-        title="Shrimp and Chorizo Paella"
-        
+        title={item.title}        
       />
 
       <CardContent >
       
         <Typography variant="body2" color="text.secondary">
-          <h5 style={{display: "flex", fontSize: "8px"}}>{currentDate}</h5>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
+          <h5 style={{display: "flex", fontSize: "8px"}}
+          >{currentDate}</h5>
+         
         </Typography>
       </CardContent>
+      <CardContent title={item.content}/>
 
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
@@ -72,6 +76,9 @@ export default function RecipeReviewCard() {
         </IconButton>        
       </CardActions>
       
-    </Card>
+    </Card> ))};
+
+    </div>
+
   );
 }
