@@ -5,7 +5,7 @@ import blogPic from "../assests/blok.png";
 import blogPic2 from "../assests/feedback.png";
 import  Button  from '@mui/material/Button';
 import google from "../assests/google.png";
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { AddBlog } from "../utils/function";
 
@@ -20,6 +20,7 @@ const NewBlog = ({info, setInfo, handleSubmit}) => {
     const {name, value} = e.target;
     console.log(name, value);
     setInfo({...info,[name]:value});
+   
 
 
   }

@@ -11,7 +11,7 @@ import MyNavbar from "../components/Navbar";
 import { useState } from "react";
 import { AddBlog } from "../utils/function";
 
-const initialValues = {title:"", imgUrl:"", content:""}
+const initialValues = {title:"", imgUrl:"", content:"" }
 
 const AppRouter = () => {
 
@@ -25,8 +25,8 @@ const AppRouter = () => {
     else {AddBlog(info)}
   }
 
-  const updateHandler =(id, title, imgUrl, content) => {
-    setInfo({id, title, imgUrl, content});
+  const updateHandler =(id, title, imgUrl, content ) => {
+    setInfo({id, title, imgUrl, content });
   }
 
   return (
@@ -48,4 +48,4 @@ const AppRouter = () => {
   )
 }
 
-export default AppRouter
+export default AppRouter;

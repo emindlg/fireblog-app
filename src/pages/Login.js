@@ -27,9 +27,16 @@ const Login = () => {
       signUpProvider(navigate);
     }
   return (
-    <>
+    <div 
+    style={{
+      backgroundImage: "url(https://picsum.photos/800/800)", backgroundSize:"cover", 
+      backgroundAttachment: "fixed", 
+      backgroundRepeat:"no-repeat",
+      height: "100vh",
+      padding: "50px"
+      }}>
     
-    <div style={{border: "1px solid gray", height:"550px", width: "400px",margin: "50px auto", borderRadius: "5px",  alignItems: "center", flexWrap: "wrap", padding: "10px", boxShadow:"5px 5px 9px", backgroundColor: "white"}} >
+    <div style={{border: "1px solid gray", height:"550px", width: "400px",margin: "0px auto", borderRadius: "5px",  alignItems: "center", flexWrap: "wrap", padding: "10px", boxShadow:"5px 5px 9px", backgroundColor: "white"}} >
       <form onSubmit={handleSubmit}>
           <div >
             <img src={ blogPic } alt=""not found/>
@@ -82,7 +89,7 @@ const Login = () => {
         </div>
       </form>
     </div>
-    </>
+    </div>
   );
 };
 
